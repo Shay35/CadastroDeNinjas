@@ -2,11 +2,17 @@ package dev.java.CadastroDeNinjas.Missoes;
 
 import dev.java.CadastroDeNinjas.Ninjas.NinjaModel;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "tb_missoes")
+@Data //cria getter e setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MissoesModel {
 
     @Id
