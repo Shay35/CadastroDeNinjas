@@ -12,8 +12,13 @@ public class NinjaService {
     @Autowired
     private NinjaRepository ninjaRepository;
 
-    public NinjaModel adicionarNinja(NinjaModel ninja) {
-        return ninjaRepository.save(ninja);
+    @Autowired
+    private NinjaMapper ninjaMapper;
+
+    public NinjaDTO adicionarNinja(NinjaDTO ninjaDTO) {
+        NinjaModel ninja = ninjaMapper.map(ninjaDTO);
+        ninjaRepository.save(ninja);
+        return ninjaMapper.map(ninja);
     }
 
     public Optional<NinjaModel> buscarNinjaPorId(Long id) {
