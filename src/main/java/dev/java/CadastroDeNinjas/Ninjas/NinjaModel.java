@@ -30,6 +30,9 @@ public class NinjaModel {
     @Column(name = "idade")
     private int idade;
 
+    @Column(name = "rank")
+    private String rank;
+
     //@ManyToOne - um ninja tem uma unica missao.
     //O joinColumn gera uma terceira tabela que une a tabela de ninjas e a tabela de missoes
     @ManyToOne
