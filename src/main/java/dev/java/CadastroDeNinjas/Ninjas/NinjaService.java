@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NinjaService {
@@ -17,25 +18,29 @@ public class NinjaService {
 
     public NinjaDTO adicionarNinja(NinjaDTO ninjaDTO) {
         NinjaModel ninja = ninjaMapper.map(ninjaDTO);
-        ninjaRepository.save(ninja);
+        ninja = ninjaRepository.save(ninja);
         return ninjaMapper.map(ninja);
     }
 
-    public Optional<NinjaModel> buscarNinjaPorId(Long id) {
-        return ninjaRepository.findById(id);
+    public NinjaDTO buscarNinjaPorId(Long id) {
+        Optional<NinjaModel> ninjaPorId = ninjaRepository.findById(id);
+        return ninjaPorId.map(ninjaMapper::map).orElse(null);
     }
 
-    public List<NinjaModel> mostrarNinjas() {
-        return ninjaRepository.findAll();
+    public List<NinjaDTO> mostrarNinjas() {
+        List<NinjaModel> ninjas = ninjaRepository.findAll();
+        return ninjas.stream().map(ninjaMapper::map).collect(Collectors.toList());
     }
 
-    public NinjaModel atualizarNinja(Long id, NinjaModel atualizado) {
-        if(!ninjaRepository.existsById(id)) {
-            System.out.println("Ninja não encontrado.");
-        }else {
+    public NinjaDTO atualizarNinja(Long id, NinjaDTO ninjaDTO) {
+        Optional<NinjaModel> ninjaExistente = ninjaRepository.findById(id);
+        if(ninjaExistente.isPresent()) {
+            NinjaModel atualizado = ninjaMapper.map(ninjaDTO);
             atualizado.setId(id);
+            NinjaModel ninjaSalvo = ninjaRepository.save(atualizado);
+            return ninjaMapper.map(ninjaSalvo);
         }
-        return ninjaRepository.save(atualizado);
+        return null;
     }
 
     public void deletarNinja(Long id) {

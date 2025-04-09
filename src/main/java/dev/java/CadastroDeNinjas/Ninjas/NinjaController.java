@@ -22,19 +22,19 @@ public class NinjaController {
     //Procurar Ninja por ID
     @GetMapping("/{id}")
     //Optional: usado para indicar que o metodo pode ou não retornar um valor
-    public Optional<NinjaModel> buscarNinjaPorId(@PathVariable Long id) {
+    public NinjaDTO buscarNinjaPorId(@PathVariable Long id) {
         return ninjaService.buscarNinjaPorId(id);
     }
 
     //Mostrar todos os ninjas
     @GetMapping("/mostrar")
-    public List<NinjaModel> mostrarNinjas() {
+    public List<NinjaDTO> mostrarNinjas() {
         return ninjaService.mostrarNinjas();
     }
 
     //Atualizar dados dos Ninjas
     @PutMapping("/{id}")
-    public NinjaModel atualizarNinja(@PathVariable Long id, @RequestBody NinjaModel ninja) {
+    public NinjaDTO atualizarNinja(@PathVariable Long id, @RequestBody NinjaDTO ninja) {
         return ninjaService.atualizarNinja(id, ninja);
     }
 
